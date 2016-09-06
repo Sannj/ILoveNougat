@@ -110,10 +110,11 @@ public class ProductResults extends AppCompatActivity {
                     String origPrice = jbj.getString("originalPrice");
                     String finalPrice = jbj.getString("price");
                     String discount = jbj.getString("percentOff");
+                    String imageUrl = jbj.getString("thumbnailImageUrl");
                     URL url = new URL(jbj.getString("thumbnailImageUrl"));
                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     String productUrl = jbj.getString("productUrl");
-                    Product p = new Product(productName, brandName, origPrice, finalPrice, discount, bmp, productUrl);
+                    Product p = new Product(productName, brandName, origPrice, finalPrice, discount, bmp, productUrl,imageUrl);
                     products.add(p);
                     publishProgress();
 
