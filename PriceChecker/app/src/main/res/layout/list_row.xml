@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/origPrice"
                 android:layout_toRightOf="@+id/productImage"
-                android:text="Discount : "
+                android:text="Hurry "
                 android:textSize="15sp"
                 android:padding="2dp"
                 android:paddingBottom="4dp"/>

@@ -10,9 +10,110 @@
     tools:context="com.example.sbadam2.pricechecker.ProductPage">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Product Name"
+        android:id="@+id/Title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
+    <ImageView
+        android:paddingTop="6dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/PImage"
+        android:layout_below="@+id/Title"
+        android:layout_centerHorizontal="true"
+        />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Brand Name : "
+        android:id="@+id/pBrandName"
+        android:layout_below="@+id/PImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="51dp"
+        android:textColor="#060101" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Original Price :"
+        android:id="@+id/pOrigPrice"
+        android:layout_below="@+id/pBrandName"
+        android:layout_alignParentStart="true"
+        android:textColor="#060101" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Discount : "
+        android:id="@+id/pDiscount"
+        android:layout_below="@+id/pOrigPrice"
+        android:layout_alignParentStart="true"
+        android:textColor="#060101" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Final Price : "
+        android:id="@+id/pFinalPrice"
+        android:layout_below="@+id/pDiscount"
+        android:layout_alignParentStart="true"
+        android:textColor="#060101" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/BrandNameValue"
+        android:layout_above="@+id/pOrigPrice"
+        android:layout_toEndOf="@+id/pBrandName"
+        android:textColor="#060101" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/OrigPriceValue"
+        android:layout_below="@+id/BrandNameValue"
+        android:layout_toEndOf="@+id/pOrigPrice"
+        android:textColor="#060101" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/DiscountValue"
+        android:layout_below="@+id/OrigPriceValue"
+        android:layout_toEndOf="@+id/pDiscount"
+        android:textColor="#060101" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/FinalPriceValue"
+        android:layout_below="@+id/DiscountValue"
+        android:layout_toEndOf="@+id/pFinalPrice"
+        android:textColor="#060101" />
+
+    <TextView
+        android:paddingTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Check out 6pm.com for more variety and discounts!! Hurry up!"
+        android:id="@+id/priceOn6pm"
+        android:layout_below="@+id/pFinalPrice"
+        android:layout_alignParentStart="true"
+        android:textColor="#060101" />
 
 </RelativeLayout>

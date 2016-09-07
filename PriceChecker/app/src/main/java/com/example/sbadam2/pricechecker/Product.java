@@ -20,6 +20,8 @@ public class Product implements Parcelable {
     String discount;
     String productUrl;
     String imageUrl;
+    String styleID;
+    String productId;
 
     @Override
     public int describeContents() {
@@ -36,6 +38,8 @@ public class Product implements Parcelable {
         out.writeString(discount);
         out.writeString(productUrl);
         out.writeString(imageUrl);
+        out.writeString(styleID);
+        out.writeString(productId);
     }
 
     private Product(Parcel in) {
@@ -47,6 +51,8 @@ public class Product implements Parcelable {
         this.discount = in.readString();
         this.productUrl = in.readString();
         this.imageUrl = in.readString();
+        this.styleID = in.readString();
+        this.productId = in.readString();
     }
 
     public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
@@ -63,7 +69,7 @@ public class Product implements Parcelable {
 
     };
 
-    Product(String productName, String brandName, String origPrice, String finalPrice, String discount, Bitmap bmp, String productUrl, String imageUrl) {
+    Product(String productName, String brandName, String origPrice, String finalPrice, String discount, Bitmap bmp, String productUrl, String imageUrl, String styleID, String productId) {
         this.productName = productName;
         this.brandName = brandName;
         this.photoId = bmp;
@@ -72,6 +78,8 @@ public class Product implements Parcelable {
         this.discount = discount;
         this.productUrl = productUrl;
         this.imageUrl = imageUrl;
+        this.styleID = styleID;
+        this.productId = productId;
 
     }
 
