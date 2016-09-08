@@ -3,7 +3,6 @@ package com.example.sbadam2.pricechecker;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 
 import java.util.ArrayList;
 
@@ -40,36 +37,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final ProductViewHolder holder, int i) {
-        String dis = products.get(i).discount;
-        dis = dis.substring(0,1);
+        String dis = products.get(i).getDiscount();
+        dis = dis.substring(0, 1);
         int disc = Integer.parseInt(dis);
-        if(disc == 0){
+        if (disc == 0) {
             holder.discount.setVisibility(View.GONE);
-            holder.finalPrice.setText(products.get(i).origPrice);
+            holder.finalPrice.setText(products.get(i).getOrigPrice());
             holder.origPrice.setVisibility(View.GONE);
             holder.discLabel.setVisibility(View.GONE);
-        }
-        else{
-            dis = products.get(i).discount;
+        } else {
+            dis = products.get(i).getDiscount();
             dis += " Off!!!";
             holder.discLabel.setVisibility(View.VISIBLE);
             holder.discount.setVisibility(View.VISIBLE);
             holder.origPrice.setVisibility(View.VISIBLE);
             holder.discount.setText(dis);
-            holder.origPrice.setText(products.get(i).origPrice);
-            holder.finalPrice.setText(products.get(i).finalPrice);
+            holder.origPrice.setText(products.get(i).getOrigPrice());
+            holder.finalPrice.setText(products.get(i).getFinalPrice());
             holder.origPrice.setPaintFlags(holder.origPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
-        holder.productName.setText(products.get(i).productName);
-        holder.brandName.setText(products.get(i).brandName);
-        holder.productImage.setImageBitmap(products.get(i).photoId);
+        holder.productName.setText(products.get(i).getProductName());
+        holder.brandName.setText(products.get(i).getBrandName());
+        holder.productImage.setImageBitmap(products.get(i).getPhotoId());
         final int j = i;
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,ProductPage.class);
-                
-                intent.putExtra("product",products.get(j));
+                Intent intent = new Intent(context, ProductPage.class);
+                intent.putExtra("product", products.get(j));
                 context.startActivity(intent);
             }
         });
@@ -96,7 +91,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView productImage;
         TextView discLabel;
 
-
         ProductViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cardView);
@@ -110,6 +104,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         }
     }
-
 
 }

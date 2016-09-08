@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by sbadam2 on 8/29/2016.
  */
@@ -82,5 +80,86 @@ public class Product implements Parcelable {
         this.productId = productId;
 
     }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(String finalPrice) {
+        this.finalPrice = finalPrice;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getOrigPrice() {
+        return origPrice;
+    }
+
+    public void setOrigPrice(String origPrice) {
+        this.origPrice = origPrice;
+    }
+
+    public Bitmap getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(Bitmap photoId) {
+        this.photoId = photoId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductUrl() {
+        return productUrl;
+    }
+
+    public void setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
+    }
+
+    public String getStyleID() {
+        return styleID;
+    }
+
+    public void setStyleID(String styleID) {
+        this.styleID = styleID;
+    }
+
 
 }

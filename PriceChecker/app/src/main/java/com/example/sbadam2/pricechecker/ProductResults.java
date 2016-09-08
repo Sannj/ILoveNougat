@@ -8,15 +8,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -31,7 +28,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -65,15 +61,14 @@ public class ProductResults extends AppCompatActivity {
     }
 
 
-
-        public void checkConnection() throws MalformedURLException, ExecutionException, InterruptedException {
+    public void checkConnection() throws MalformedURLException, ExecutionException, InterruptedException {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String searchTerm = extras.getString("SEARCH_TERM");
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri zapposUri = new Uri.Builder().scheme("https").authority("api.zappos.com").path("Search").appendQueryParameter("term", searchTerm).appendQueryParameter("key", AUTH_KEY_ZAPPOS).appendQueryParameter("limit","25").build();
+            Uri zapposUri = new Uri.Builder().scheme("https").authority("api.zappos.com").path("Search").appendQueryParameter("term", searchTerm).appendQueryParameter("key", AUTH_KEY_ZAPPOS).appendQueryParameter("limit", "25").build();
             new RestCallActivity().execute(zapposUri.toString());
         } else {
             Toast.makeText(getApplicationContext(), "Please connect to internet and try again!", Toast.LENGTH_LONG).show();
@@ -111,7 +106,7 @@ public class ProductResults extends AppCompatActivity {
                     String styleId = jbj.getString("styleId");
                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     String productUrl = jbj.getString("productUrl");
-                    Product p = new Product(productName, brandName, origPrice, finalPrice, discount, bmp, productUrl,imageUrl,styleId,productId);
+                    Product p = new Product(productName, brandName, origPrice, finalPrice, discount, bmp, productUrl, imageUrl, styleId, productId);
                     products.add(p);
                     publishProgress();
 
@@ -144,9 +139,9 @@ public class ProductResults extends AppCompatActivity {
                 conn.setRequestMethod("GET");
                 conn.connect();
                 int response = conn.getResponseCode();
-                if(response != 200){
-                    Toast.makeText(getApplicationContext(),"There was an issue with the request. Please restart the app.",Toast.LENGTH_LONG).show();
-                }else {
+                if (response != 200) {
+                    Toast.makeText(getApplicationContext(), "There was an issue with the request. Please restart the app.", Toast.LENGTH_LONG).show();
+                } else {
                     is = conn.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                     StringBuilder responseBuilder = new StringBuilder(2048);

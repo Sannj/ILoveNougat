@@ -2,14 +2,12 @@ package com.example.sbadam2.pricechecker;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +30,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ProductPage extends AppCompatActivity {
 
+    public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
     String productName;
     double finalPrice;
     String productUrl;
@@ -47,7 +45,6 @@ public class ProductPage extends AppCompatActivity {
     String targetStyleid;
     String targetProductId;
     double targetPrice;
-    public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
     boolean similarProductFound = false;
     boolean exactProductFound = false;
     Button navigateButton;
@@ -67,12 +64,12 @@ public class ProductPage extends AppCompatActivity {
         disc = (TextView) findViewById(R.id.DiscountValue);
         fPrice = (TextView) findViewById(R.id.FinalPriceValue);
         pImage = (ImageView) findViewById(R.id.PImage);
-        targetProductId = p.productId;
-        pName.setText(p.productName);
-        pImage.setImageBitmap(p.photoId);
-        bName.setText(p.brandName);
-        zapposProductUrl = p.productUrl;
-        String dis = p.discount;
+        targetProductId = p.getProductId();
+        pName.setText(p.getProductName());
+        pImage.setImageBitmap(p.getPhotoId());
+        bName.setText(p.getBrandName());
+        zapposProductUrl = p.getProductUrl();
+        String dis = p.getDiscount();
         try {
             checkConnection();
         } catch (MalformedURLException e) {
@@ -82,44 +79,42 @@ public class ProductPage extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dis = dis.substring(0,1);
+        dis = dis.substring(0, 1);
         int discount = Integer.parseInt(dis);
         TextView OrigPriceLabel = (TextView) findViewById(R.id.pOrigPrice);
         TextView DiscountLabel = (TextView) findViewById(R.id.pDiscount);
         TextView FinalPriceLabel = (TextView) findViewById(R.id.pFinalPrice);
-        if(discount == 0){
+        if (discount == 0) {
             OrigPriceLabel.setText("Price :");
             DiscountLabel.setVisibility(View.GONE);
             FinalPriceLabel.setVisibility(View.GONE);
-            oPrice.setText(p.origPrice);
-        }
-        else {
+            oPrice.setText(p.getOrigPrice());
+        } else {
             OrigPriceLabel.setText("Original Price :");
             DiscountLabel.setVisibility(View.VISIBLE);
             FinalPriceLabel.setVisibility(View.VISIBLE);
-            oPrice.setText(p.origPrice);
-            disc.setText(p.discount);
-            fPrice.setText(p.finalPrice);
+            oPrice.setText(p.getOrigPrice());
+            disc.setText(p.getDiscount());
+            fPrice.setText(p.getFinalPrice());
         }
-        targetStyleid = p.styleID;
-        String temp = p.finalPrice;
+        targetStyleid = p.getStyleID();
+        String temp = p.getFinalPrice();
         targetPrice = Double.parseDouble(temp.replaceAll("[\\D]", ""));
         sixPmPrice = (TextView) findViewById(R.id.priceOn6pm);
     }
 
-    public void navigateMe(View view){
+    public void navigateMe(View view) {
         Uri uriUrl = Uri.parse(targetUrlOn6pm);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
     }
 
-    public void shareMe(View view){
+    public void shareMe(View view) {
         Intent intent2 = new Intent();
         intent2.setAction(Intent.ACTION_SEND);
         intent2.setType("text/plain");
-        intent2.putExtra(Intent.EXTRA_TEXT, "Check out this product on Zappos!"+ zapposProductUrl);
+        intent2.putExtra(Intent.EXTRA_TEXT, "Check out this product on Zappos!" + zapposProductUrl);
         startActivity(Intent.createChooser(intent2, "Share via"));
-       
     }
 
 
@@ -127,7 +122,7 @@ public class ProductPage extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri sixPmUri = new Uri.Builder().scheme("https").authority("api.6pm.com").path("Search").appendQueryParameter("term",targetProductId).appendQueryParameter("key", AUTH_KEY_6PM).appendQueryParameter("limit","25").build();
+            Uri sixPmUri = new Uri.Builder().scheme("https").authority("api.6pm.com").path("Search").appendQueryParameter("term", targetProductId).appendQueryParameter("key", AUTH_KEY_6PM).appendQueryParameter("limit", "25").build();
             new RestCallActivity().execute(sixPmUri.toString());
         } else {
             Toast.makeText(getApplicationContext(), "Please connect to internet and try again!", Toast.LENGTH_LONG).show();
@@ -150,17 +145,17 @@ public class ProductPage extends AppCompatActivity {
                     JSONObject jbj = jarray.getJSONObject(i);
                     String productId = jbj.getString("productId");
 
-                    if(productId.equals(targetProductId)){
+                    if (productId.equals(targetProductId)) {
                         targetUrlOn6pm = jbj.getString("productUrl");
                         similarProductFound = true;
                         String styleId = jbj.getString("styleId");
-                        if(styleId.equals(targetStyleid)){
+                        if (styleId.equals(targetStyleid)) {
                             exactProductFound = true;
 
                         }
                         String price = jbj.getString("price");
                         finalPrice = Double.parseDouble(price.replaceAll("[$,]", ""));
-                        if(finalPrice <= targetPrice){
+                        if (finalPrice <= targetPrice) {
                             productName = jbj.getString("productName");
                             productUrl = jbj.getString("productUrl");
                             break;
@@ -177,13 +172,12 @@ public class ProductPage extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jarray) {
-            if(exactProductFound == true){
-                sixPmPrice.setText("Congratulations! This product is only for "+finalPrice+" on 6pm!! Checkout 6pm.com now!");
+            if (exactProductFound == true) {
+                sixPmPrice.setText("Congratulations! This product is only for " + finalPrice + " on 6pm!! Checkout 6pm.com now!");
+            } else if (similarProductFound == true) {
+                sixPmPrice.setText("6pm.com has similar products for a lesser price as low as $" + finalPrice + "! Check it out now!!");
             }
-            else if(similarProductFound == true){
-                sixPmPrice.setText("6pm.com has similar products for a lesser price as low as $"+finalPrice+"! Check it out now!!");
-            }
-            if(exactProductFound == false &&similarProductFound == false ){
+            if (exactProductFound == false && similarProductFound == false) {
                 navigateButton.setVisibility(View.GONE);
             }
 
@@ -200,10 +194,9 @@ public class ProductPage extends AppCompatActivity {
                 conn.setRequestMethod("GET");
                 conn.connect();
                 int response = conn.getResponseCode();
-                if(response!=200){
-                    Toast.makeText(getApplicationContext(),"There was an issue with the request. Please restart the app.",Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (response != 200) {
+                    Toast.makeText(getApplicationContext(), "There was an issue with the request. Please restart the app.", Toast.LENGTH_LONG).show();
+                } else {
                     is = conn.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                     StringBuilder responseBuilder = new StringBuilder(2048);
