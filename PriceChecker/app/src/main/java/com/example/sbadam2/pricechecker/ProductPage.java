@@ -52,6 +52,7 @@ public class ProductPage extends AppCompatActivity {
     boolean exactProductFound = false;
     Button navigateButton;
     String targetUrlOn6pm;
+    String zapposProductUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class ProductPage extends AppCompatActivity {
         pName.setText(p.productName);
         pImage.setImageBitmap(p.photoId);
         bName.setText(p.brandName);
+        zapposProductUrl = p.productUrl;
         String dis = p.discount;
         try {
             checkConnection();
@@ -109,6 +111,15 @@ public class ProductPage extends AppCompatActivity {
         Uri uriUrl = Uri.parse(targetUrlOn6pm);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
+    }
+
+    public void shareMe(View view){
+        Intent intent2 = new Intent();
+        intent2.setAction(Intent.ACTION_SEND);
+        intent2.setType("text/plain");
+        intent2.putExtra(Intent.EXTRA_TEXT, "Check out this product on Zappos!"+ zapposProductUrl);
+        startActivity(Intent.createChooser(intent2, "Share via"));
+       
     }
 
 

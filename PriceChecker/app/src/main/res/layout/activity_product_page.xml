@@ -126,4 +126,15 @@
         android:layout_centerInParent="true"
         android:onClick="navigateMe"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share me!"
+        android:id="@+id/Sharebutton"
+        android:layout_below="@+id/navigateButton"
+        android:clickable="true"
+        android:layout_centerInParent="true"
+        android:onClick="shareMe"/>
+
 </RelativeLayout>
