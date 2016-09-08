@@ -62,21 +62,9 @@ public class ProductResults extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
 
-        }
-    }
 
         public void checkConnection() throws MalformedURLException, ExecutionException, InterruptedException {
         Intent intent = getIntent();
@@ -91,7 +79,6 @@ public class ProductResults extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please connect to internet and try again!", Toast.LENGTH_LONG).show();
         }
     }
-
 
 
     private class RestCallActivity extends AsyncTask<String, Void, JSONArray> {

@@ -116,4 +116,14 @@
         android:layout_alignParentStart="true"
         android:textColor="#060101" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take me there!"
+        android:id="@+id/navigateButton"
+        android:layout_below="@+id/priceOn6pm"
+        android:layout_centerInParent="true"
+        android:onClick="navigateMe"/>
+
 </RelativeLayout>

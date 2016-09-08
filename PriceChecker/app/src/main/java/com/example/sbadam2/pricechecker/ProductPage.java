@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ public class ProductPage extends AppCompatActivity {
     public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
     boolean similarProductFound = false;
     boolean exactProductFound = false;
+    Button navigateButton;
+    String targetUrlOn6pm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class ProductPage extends AppCompatActivity {
         Intent intent = getIntent();
         p = intent.getParcelableExtra("product");
         pName = (TextView) findViewById(R.id.Title);
+        navigateButton = (Button) findViewById(R.id.navigateButton);
         bName = (TextView) findViewById(R.id.BrandNameValue);
         oPrice = (TextView) findViewById(R.id.OrigPriceValue);
         disc = (TextView) findViewById(R.id.DiscountValue);
@@ -99,9 +103,15 @@ public class ProductPage extends AppCompatActivity {
         String temp = p.finalPrice;
         targetPrice = Double.parseDouble(temp.replaceAll("[\\D]", ""));
         sixPmPrice = (TextView) findViewById(R.id.priceOn6pm);
-
-
     }
+
+    public void navigateMe(View view){
+        Uri uriUrl = Uri.parse(targetUrlOn6pm);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
+    }
+
+
     public void checkConnection() throws MalformedURLException, ExecutionException, InterruptedException {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -130,10 +140,12 @@ public class ProductPage extends AppCompatActivity {
                     String productId = jbj.getString("productId");
 
                     if(productId.equals(targetProductId)){
+                        targetUrlOn6pm = jbj.getString("productUrl");
                         similarProductFound = true;
                         String styleId = jbj.getString("styleId");
                         if(styleId.equals(targetStyleid)){
                             exactProductFound = true;
+
                         }
                         String price = jbj.getString("price");
                         finalPrice = Double.parseDouble(price.replaceAll("[$,]", ""));
@@ -160,6 +172,10 @@ public class ProductPage extends AppCompatActivity {
             else if(similarProductFound == true){
                 sixPmPrice.setText("6pm.com has similar products for a lesser price as low as $"+finalPrice+"! Check it out now!!");
             }
+            if(exactProductFound == false &&similarProductFound == false ){
+                navigateButton.setVisibility(View.GONE);
+            }
+
         }
 
         private JSONObject sixPMCall(String Zurl) throws IOException, JSONException {
