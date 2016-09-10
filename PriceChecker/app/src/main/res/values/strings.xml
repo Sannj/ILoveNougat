@@ -3,6 +3,6 @@
     <string name="welcome_message_main_activity">Welcome to Zappos.com!</string>
     <string name="enter_value_label_main_activity">Enter the product name :</string>
     <string name="submit_button_main_activity">Get my product!</string>
-
+    <string name="toast_string_main_activity">Please enter the search term</string>
 
 </resources>

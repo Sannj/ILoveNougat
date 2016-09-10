@@ -1,6 +1,7 @@
 package com.example.sbadam2.pricechecker;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +41,8 @@ public class ProductResults extends AppCompatActivity {
     RecyclerViewAdapter adapter;
     ArrayList<Product> products = new ArrayList<Product>();
     ProgressBar progressBar;
+    boolean foundResults = true;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,18 @@ public class ProductResults extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
+
+        alertDialog = new AlertDialog.Builder(ProductResults.this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Sorry no products were found. Try searching again!");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
         try {
             checkConnection();
@@ -92,7 +108,9 @@ public class ProductResults extends AppCompatActivity {
             try {
                 jobj = zapposCall(params[0]);
                 jarray = jobj.getJSONArray("results");
-
+                if(jarray.length() == 0){
+                    foundResults = false;
+                }
                 for (int i = 0; i < jarray.length(); i++) {
                     JSONObject jbj = jarray.getJSONObject(i);
                     String productName = jbj.getString("productName");
@@ -121,9 +139,14 @@ public class ProductResults extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jarray) {
-            progressBar.setVisibility(View.GONE);
-            adapter = new RecyclerViewAdapter(ProductResults.this, products);
-            recyclerView.setAdapter(adapter);
+            if(foundResults == false){
+                alertDialog.show();
+            }
+            else {
+                progressBar.setVisibility(View.GONE);
+                adapter = new RecyclerViewAdapter(ProductResults.this, products);
+                recyclerView.setAdapter(adapter);
+            }
 
         }
 
