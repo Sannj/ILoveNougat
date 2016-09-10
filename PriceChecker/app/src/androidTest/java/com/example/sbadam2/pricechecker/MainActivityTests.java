@@ -1,6 +1,7 @@
 package com.example.sbadam2.pricechecker;
 
 import android.app.Instrumentation;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -58,5 +59,20 @@ public class MainActivityTests {
         onView(withText("Get my product!")).perform(click());
         onView(withText(R.string.toast_string_main_activity)).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void alertDialog(){
+        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ProductResults.class.getName(), null, false);
+        onView(withId(R.id.searchBox))
+                .perform(typeText("heels"), closeSoftKeyboard());
+        onView(withText("Get my product!")).perform(click());
+        ProductResults nextActivity = (ProductResults) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
+        assertNotNull(nextActivity);
+        onView(withText(R.string.no_products_alert_product_results_activity))
+                .inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView()))))
+                .perform(click());
+
+    }
+
 
 }

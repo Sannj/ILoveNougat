@@ -55,8 +55,8 @@ public class ProductResults extends AppCompatActivity {
 
         alertDialog = new AlertDialog.Builder(ProductResults.this).create();
         alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Sorry no products were found. Try searching again!");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+        alertDialog.setMessage(getResources().getString(R.string.no_products_alert_product_results_activity));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().getString(R.string.alert_ok_button_product_results_activity),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -87,7 +87,7 @@ public class ProductResults extends AppCompatActivity {
             Uri zapposUri = new Uri.Builder().scheme("https").authority("api.zappos.com").path("Search").appendQueryParameter("term", searchTerm).appendQueryParameter("key", AUTH_KEY_ZAPPOS).appendQueryParameter("limit", "25").build();
             new RestCallActivity().execute(zapposUri.toString());
         } else {
-            Toast.makeText(getApplicationContext(), "Please connect to internet and try again!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_toast), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -163,7 +163,7 @@ public class ProductResults extends AppCompatActivity {
                 conn.connect();
                 int response = conn.getResponseCode();
                 if (response != 200) {
-                    Toast.makeText(getApplicationContext(), "There was an issue with the request. Please restart the app.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_call_failed), Toast.LENGTH_LONG).show();
                 } else {
                     is = conn.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));

@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">PriceChecker</string>
-    <string name="welcome_message_main_activity">Welcome to Zappos.com!</string>
-    <string name="enter_value_label_main_activity">Enter the product name :</string>
-    <string name="submit_button_main_activity">Get my product!</string>
+    <string name="welcome_message_main_activity">"Welcome to Zappos.com!"</string>
+    <string name="enter_value_label_main_activity">"Enter the product name :"</string>
+    <string name="submit_button_main_activity">"Get my product!"</string>
     <string name="toast_string_main_activity">Please enter the search term</string>
+    <string name="no_products_alert_product_results_activity">"Sorry no products were found. Try searching again!"</string>
+    <string name="alert_ok_button_product_results_activity">OK</string>
+    <string name="no_internet_toast">"Please connect to internet and try again!"</string>
+    <string name="rest_call_failed">"There was an issue with the request. Please restart the app."</string>
+    <string name="original_price_as_final_price_label_product_page_activity">"Price :"</string>
+    <string name="original_price_label_product_page_activity">"Original Price :"</string>
+    <string name="share_product_url_text_product_page_activity">"Check out this product on Zappos!"</string>
+    <string name="share_via_product_page_activity">Share via</string>
+    <string name="exact_product_found_label_product_page_activity">"Congratulations! This product is only for %1$s on 6pm!! Checkout 6pm.com now!"</string>
+    <string name="similar_product_found_product_page_activity">"6pm.com has similar products for a price as low as $%1$s! Check it out!"</string>
+
 
 </resources>

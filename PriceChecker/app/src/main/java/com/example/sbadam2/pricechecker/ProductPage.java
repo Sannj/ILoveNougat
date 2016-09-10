@@ -85,12 +85,12 @@ public class ProductPage extends AppCompatActivity {
         TextView DiscountLabel = (TextView) findViewById(R.id.pDiscount);
         TextView FinalPriceLabel = (TextView) findViewById(R.id.pFinalPrice);
         if (discount == 0) {
-            OrigPriceLabel.setText("Price :");
+            OrigPriceLabel.setText(getResources().getString(R.string.original_price_as_final_price_label_product_page_activity));
             DiscountLabel.setVisibility(View.GONE);
             FinalPriceLabel.setVisibility(View.GONE);
             oPrice.setText(p.getOrigPrice());
         } else {
-            OrigPriceLabel.setText("Original Price :");
+            OrigPriceLabel.setText(getResources().getString(R.string.original_price_label_product_page_activity));
             DiscountLabel.setVisibility(View.VISIBLE);
             FinalPriceLabel.setVisibility(View.VISIBLE);
             oPrice.setText(p.getOrigPrice());
@@ -113,8 +113,8 @@ public class ProductPage extends AppCompatActivity {
         Intent intent2 = new Intent();
         intent2.setAction(Intent.ACTION_SEND);
         intent2.setType("text/plain");
-        intent2.putExtra(Intent.EXTRA_TEXT, "Check out this product on Zappos!" + zapposProductUrl);
-        startActivity(Intent.createChooser(intent2, "Share via"));
+        intent2.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_product_url_text_product_page_activity) + zapposProductUrl);
+        startActivity(Intent.createChooser(intent2, getResources().getString(R.string.share_via_product_page_activity)));
     }
 
 
@@ -125,7 +125,7 @@ public class ProductPage extends AppCompatActivity {
             Uri sixPmUri = new Uri.Builder().scheme("https").authority("api.6pm.com").path("Search").appendQueryParameter("term", targetProductId).appendQueryParameter("key", AUTH_KEY_6PM).appendQueryParameter("limit", "25").build();
             new RestCallActivity().execute(sixPmUri.toString());
         } else {
-            Toast.makeText(getApplicationContext(), "Please connect to internet and try again!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_toast), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -172,12 +172,12 @@ public class ProductPage extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jarray) {
-            if (exactProductFound == true) {
-                sixPmPrice.setText("Congratulations! This product is only for " + finalPrice + " on 6pm!! Checkout 6pm.com now!");
-            } else if (similarProductFound == true) {
-                sixPmPrice.setText("6pm.com has similar products for a lesser price as low as $" + finalPrice + "! Check it out now!!");
+            if (exactProductFound) {
+                sixPmPrice.setText(getResources().getString(R.string.exact_product_found_label_product_page_activity,finalPrice));
+            } else if (similarProductFound) {
+                sixPmPrice.setText(getResources().getString(R.string.similar_product_found_product_page_activity,finalPrice));
             }
-            if (exactProductFound == false && similarProductFound == false) {
+            if (!exactProductFound && !similarProductFound) {
                 navigateButton.setVisibility(View.GONE);
             }
 
@@ -195,7 +195,7 @@ public class ProductPage extends AppCompatActivity {
                 conn.connect();
                 int response = conn.getResponseCode();
                 if (response != 200) {
-                    Toast.makeText(getApplicationContext(), "There was an issue with the request. Please restart the app.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_call_failed), Toast.LENGTH_LONG).show();
                 } else {
                     is = conn.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
