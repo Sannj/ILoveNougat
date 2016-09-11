@@ -1,6 +1,5 @@
 package com.example.sbadam2.pricechecker;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -32,6 +31,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ProductPage extends AppCompatActivity {
 
     public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
+
     String productName;
     double finalPrice;
     String productUrl;
@@ -40,7 +40,7 @@ public class ProductPage extends AppCompatActivity {
     TextView oPrice;
     TextView disc;
     TextView fPrice;
-    TextView sixPmPrice;
+    TextView f6pmPrice;
     ImageView pImage;
     Product p;
     String targetStyleid;
@@ -71,13 +71,13 @@ public class ProductPage extends AppCompatActivity {
         bName.setText(p.getBrandName());
         zapposProductUrl = p.getProductUrl();
         String dis = p.getDiscount();
+        targetStyleid = p.getStyleId();
+        String temp = p.getFinalPrice();
+        targetPrice = Double.parseDouble(temp.replaceAll("[$,]", ""));
+        f6pmPrice = (TextView) findViewById(R.id.priceOn6pm);
         try {
             checkConnection();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (MalformedURLException|ExecutionException|InterruptedException e) {
             e.printStackTrace();
         }
         dis = dis.substring(0, 1);
@@ -98,10 +98,7 @@ public class ProductPage extends AppCompatActivity {
             disc.setText(p.getDiscount());
             fPrice.setText(p.getFinalPrice());
         }
-        targetStyleid = p.getStyleID();
-        String temp = p.getFinalPrice();
-        targetPrice = Double.parseDouble(temp.replaceAll("[\\D]", ""));
-        sixPmPrice = (TextView) findViewById(R.id.priceOn6pm);
+
     }
 
     public void navigateMe(View view) {
@@ -165,10 +162,8 @@ public class ProductPage extends AppCompatActivity {
                         }
                     }
                 }
-            } catch (IOException ex) {
+            } catch (IOException|JSONException ex) {
                 ex.getLocalizedMessage();
-            } catch (JSONException e) {
-                e.getLocalizedMessage();
             }
             return jarray;
         }
@@ -176,9 +171,9 @@ public class ProductPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jarray) {
             if (exactProductFound) {
-                sixPmPrice.setText(getResources().getString(R.string.exact_product_found_label_product_page_activity,finalPrice));
+                f6pmPrice.setText(getResources().getString(R.string.exact_product_found_label_product_page_activity,finalPrice));
             } else if (similarProductFound) {
-                sixPmPrice.setText(getResources().getString(R.string.similar_product_found_product_page_activity,finalPrice));
+                f6pmPrice.setText(getResources().getString(R.string.similar_product_found_product_page_activity,finalPrice));
             }
             if (!exactProductFound && !similarProductFound) {
                 navigateButton.setVisibility(View.GONE);
@@ -218,6 +213,3 @@ public class ProductPage extends AppCompatActivity {
         }
     }
 }
-
-
-

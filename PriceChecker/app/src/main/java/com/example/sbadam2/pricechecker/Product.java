@@ -10,6 +10,8 @@ import android.os.Parcelable;
 
 
 public class Product implements Parcelable {
+
+    // These are declared in the order they are used, do not sort.
     String productName;
     String brandName;
     Bitmap photoId;
@@ -18,7 +20,7 @@ public class Product implements Parcelable {
     String discount;
     String productUrl;
     String imageUrl;
-    String styleID;
+    String styleId;
     String productId;
 
     @Override
@@ -36,7 +38,7 @@ public class Product implements Parcelable {
         out.writeString(discount);
         out.writeString(productUrl);
         out.writeString(imageUrl);
-        out.writeString(styleID);
+        out.writeString(styleId);
         out.writeString(productId);
     }
 
@@ -49,7 +51,7 @@ public class Product implements Parcelable {
         this.discount = in.readString();
         this.productUrl = in.readString();
         this.imageUrl = in.readString();
-        this.styleID = in.readString();
+        this.styleId = in.readString();
         this.productId = in.readString();
     }
 
@@ -67,7 +69,7 @@ public class Product implements Parcelable {
 
     };
 
-    Product(String productName, String brandName, String origPrice, String finalPrice, String discount, Bitmap bmp, String productUrl, String imageUrl, String styleID, String productId) {
+    Product(String productName, String brandName, String origPrice, String finalPrice, String discount, Bitmap bmp, String productUrl, String imageUrl, String styleId, String productId) {
         this.productName = productName;
         this.brandName = brandName;
         this.photoId = bmp;
@@ -76,7 +78,7 @@ public class Product implements Parcelable {
         this.discount = discount;
         this.productUrl = productUrl;
         this.imageUrl = imageUrl;
-        this.styleID = styleID;
+        this.styleId = styleId;
         this.productId = productId;
 
     }
@@ -85,81 +87,40 @@ public class Product implements Parcelable {
         return brandName;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
     public String getDiscount() {
         return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
     }
 
     public String getFinalPrice() {
         return finalPrice;
     }
 
-    public void setFinalPrice(String finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getOrigPrice() {
         return origPrice;
     }
 
-    public void setOrigPrice(String origPrice) {
-        this.origPrice = origPrice;
-    }
-
     public Bitmap getPhotoId() {
         return photoId;
-    }
-
-    public void setPhotoId(Bitmap photoId) {
-        this.photoId = photoId;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
     public String getProductName() {
         return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public String getProductUrl() {
         return productUrl;
     }
 
-    public void setProductUrl(String productUrl) {
-        this.productUrl = productUrl;
+    public String getStyleId() {
+        return styleId;
     }
-
-    public String getStyleID() {
-        return styleID;
-    }
-
-    public void setStyleID(String styleID) {
-        this.styleID = styleID;
-    }
-
 
 }

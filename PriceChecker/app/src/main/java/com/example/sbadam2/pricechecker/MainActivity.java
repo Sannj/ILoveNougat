@@ -19,9 +19,11 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.searchBox);
         String searchTerm = editText.getText().toString();
         if (searchTerm.isEmpty()) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_string_main_activity), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string
+                    .toast_string_main_activity), Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, ProductResults.class);
+            // make explicit which key holds the value
             intent.putExtra("SEARCH_TERM", searchTerm);
             startActivity(intent);
         }
