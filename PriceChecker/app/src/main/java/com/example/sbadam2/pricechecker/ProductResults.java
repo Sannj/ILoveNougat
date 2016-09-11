@@ -37,6 +37,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ProductResults extends AppCompatActivity {
 
     public final static String AUTH_KEY_ZAPPOS = "b743e26728e16b81da139182bb2094357c31d331";
+
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     ArrayList<Product> products = new ArrayList<Product>();
@@ -67,11 +68,7 @@ public class ProductResults extends AppCompatActivity {
 
         try {
             checkConnection();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (MalformedURLException|ExecutionException|InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -84,18 +81,23 @@ public class ProductResults extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri zapposUri = new Uri.Builder().scheme("https").authority("api.zappos.com").path("Search").appendQueryParameter("term", searchTerm).appendQueryParameter("key", AUTH_KEY_ZAPPOS).appendQueryParameter("limit", "25").build();
+            Uri zapposUri = new Uri.Builder().scheme("https").authority("api.zappos.com").path("Search")
+                    .appendQueryParameter("term", searchTerm)
+                    .appendQueryParameter("key", AUTH_KEY_ZAPPOS)
+                    .appendQueryParameter("limit", "25")
+                    .build();
             new RestCallActivity().execute(zapposUri.toString());
         } else {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_toast), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(
+                    R.string.no_internet_toast), Toast.LENGTH_LONG).show();
         }
     }
 
 
     private class RestCallActivity extends AsyncTask<String, Void, JSONArray> {
 
-        JSONObject jobj;
-        JSONArray jarray;
+        JSONObject jObj;
+        JSONArray jArray;
 
         @Override
         protected void onPreExecute() {
@@ -106,40 +108,37 @@ public class ProductResults extends AppCompatActivity {
         protected JSONArray doInBackground(String... params) {
 
             try {
-                jobj = zapposCall(params[0]);
-                jarray = jobj.getJSONArray("results");
-                if(jarray.length() == 0){
+                jObj = zapposCall(params[0]);
+                jArray = jObj.getJSONArray("results");
+                if(jArray.length() == 0){
                     foundResults = false;
                 }
-                for (int i = 0; i < jarray.length(); i++) {
-                    JSONObject jbj = jarray.getJSONObject(i);
-                    String productName = jbj.getString("productName");
-                    String brandName = jbj.getString("brandName");
-                    String origPrice = jbj.getString("originalPrice");
-                    String finalPrice = jbj.getString("price");
-                    String discount = jbj.getString("percentOff");
-                    String productId = jbj.getString("productId");
-                    String imageUrl = jbj.getString("thumbnailImageUrl");
-                    URL url = new URL(jbj.getString("thumbnailImageUrl"));
-                    String styleId = jbj.getString("styleId");
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject jTempObj = jArray.getJSONObject(i);
+                    String productName = jTempObj.getString("productName");
+                    String brandName = jTempObj.getString("brandName");
+                    String origPrice = jTempObj.getString("originalPrice");
+                    String finalPrice = jTempObj.getString("price");
+                    String discount = jTempObj.getString("percentOff");
+                    String productId = jTempObj.getString("productId");
+                    String imageUrl = jTempObj.getString("thumbnailImageUrl");
+                    URL url = new URL(jTempObj.getString("thumbnailImageUrl"));
+                    String styleId = jTempObj.getString("styleId");
                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    String productUrl = jbj.getString("productUrl");
+                    String productUrl = jTempObj.getString("productUrl");
                     Product p = new Product(productName, brandName, origPrice, finalPrice, discount, bmp, productUrl, imageUrl, styleId, productId);
                     products.add(p);
                     publishProgress();
-
                 }
-            } catch (IOException ex) {
+            } catch (IOException|JSONException ex) {
                 ex.getLocalizedMessage();
-            } catch (JSONException e) {
-                e.getLocalizedMessage();
             }
-            return jarray;
+            return jArray;
         }
 
         @Override
-        protected void onPostExecute(JSONArray jarray) {
-            if(foundResults == false){
+        protected void onPostExecute(JSONArray jArray) {
+            if(!foundResults){
                 alertDialog.show();
             }
             else {
@@ -147,15 +146,14 @@ public class ProductResults extends AppCompatActivity {
                 adapter = new RecyclerViewAdapter(ProductResults.this, products);
                 recyclerView.setAdapter(adapter);
             }
-
         }
 
 
-        private JSONObject zapposCall(String Zurl) throws IOException, JSONException {
+        private JSONObject zapposCall(String zUrl) throws IOException, JSONException {
             InputStream is = null;
-            JSONObject jobj = null;
+            JSONObject jObj = null;
             try {
-                URL url = new URL(Zurl);
+                URL url = new URL(zUrl);
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(15000);
@@ -172,17 +170,15 @@ public class ProductResults extends AppCompatActivity {
                     while ((resStr = br.readLine()) != null) {
                         responseBuilder.append(resStr);
                     }
-                    jobj = new JSONObject(responseBuilder.toString());
+                    jObj = new JSONObject(responseBuilder.toString());
                 }
-
             } finally {
                 if (is != null) {
                     is.close();
                 }
             }
-            return jobj;
+            return jObj;
         }
-
     }
 
 }

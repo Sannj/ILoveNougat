@@ -31,8 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row, null);
-        ProductViewHolder pvh = new ProductViewHolder(v);
-        return pvh;
+        return new ProductViewHolder(v);
     }
 
     @Override
@@ -59,6 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.productName.setText(products.get(i).getProductName());
         holder.brandName.setText(products.get(i).getBrandName());
         holder.productImage.setImageBitmap(products.get(i).getPhotoId());
+        // needs a final variable for use inside an innerclass
         final int j = i;
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +76,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+
     @Override
     public int getItemCount() {
         return products.size();
     }
+
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
         CardView cv;

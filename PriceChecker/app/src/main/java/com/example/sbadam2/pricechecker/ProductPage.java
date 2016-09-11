@@ -43,7 +43,7 @@ public class ProductPage extends AppCompatActivity {
     TextView f6pmPrice;
     ImageView pImage;
     Product p;
-    String targetStyleid;
+    String targetStyleId;
     String targetProductId;
     double targetPrice;
     boolean similarProductFound = false;
@@ -71,7 +71,7 @@ public class ProductPage extends AppCompatActivity {
         bName.setText(p.getBrandName());
         zapposProductUrl = p.getProductUrl();
         String dis = p.getDiscount();
-        targetStyleid = p.getStyleId();
+        targetStyleId = p.getStyleId();
         String temp = p.getFinalPrice();
         targetPrice = Double.parseDouble(temp.replaceAll("[$,]", ""));
         f6pmPrice = (TextView) findViewById(R.id.priceOn6pm);
@@ -86,12 +86,14 @@ public class ProductPage extends AppCompatActivity {
         TextView DiscountLabel = (TextView) findViewById(R.id.pDiscount);
         TextView FinalPriceLabel = (TextView) findViewById(R.id.pFinalPrice);
         if (discount == 0) {
-            OrigPriceLabel.setText(getResources().getString(R.string.original_price_as_final_price_label_product_page_activity));
+            OrigPriceLabel.setText(getResources().getString(R.string.
+                    original_price_as_final_price_label_product_page_activity));
             DiscountLabel.setVisibility(View.GONE);
             FinalPriceLabel.setVisibility(View.GONE);
             oPrice.setText(p.getOrigPrice());
         } else {
-            OrigPriceLabel.setText(getResources().getString(R.string.original_price_label_product_page_activity));
+            OrigPriceLabel.setText(getResources().getString(
+                    R.string.original_price_label_product_page_activity));
             DiscountLabel.setVisibility(View.VISIBLE);
             FinalPriceLabel.setVisibility(View.VISIBLE);
             oPrice.setText(p.getOrigPrice());
@@ -100,6 +102,7 @@ public class ProductPage extends AppCompatActivity {
         }
 
     }
+
 
     public void navigateMe(View view) {
         Uri uriUrl = Uri.parse(targetUrlOn6pm);
@@ -112,9 +115,10 @@ public class ProductPage extends AppCompatActivity {
         Intent intent2 = new Intent();
         intent2.setAction(Intent.ACTION_SEND);
         intent2.setType("text/plain");
-        intent2.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_product_url_text_product_page_activity, zapposProductUrl));
-        startActivity(Intent.createChooser(intent2, getResources().getString(R.string.share_via_product_page_activity)));
-
+        intent2.putExtra(Intent.EXTRA_TEXT, getResources().getString(
+                R.string.share_product_url_text_product_page_activity, zapposProductUrl));
+        startActivity(Intent.createChooser(intent2, getResources().getString(
+                R.string.share_via_product_page_activity)));
     }
 
 
@@ -122,42 +126,47 @@ public class ProductPage extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri sixPmUri = new Uri.Builder().scheme("https").authority("api.6pm.com").path("Search").appendQueryParameter("term", targetProductId).appendQueryParameter("key", AUTH_KEY_6PM).appendQueryParameter("limit", "25").build();
+            Uri sixPmUri = new Uri.Builder().scheme("https").authority("api.6pm.com").path("Search")
+                    .appendQueryParameter("term", targetProductId)
+                    .appendQueryParameter("key", AUTH_KEY_6PM)
+                    .appendQueryParameter("limit", "25")
+                    .build();
             new RestCallActivity().execute(sixPmUri.toString());
         } else {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_toast), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(
+                    R.string.no_internet_toast), Toast.LENGTH_LONG).show();
         }
     }
 
     private class RestCallActivity extends AsyncTask<String, Void, JSONArray> {
 
-        JSONObject jobj;
-        JSONArray jarray;
+        JSONObject jObj;
+        JSONArray jArray;
 
 
         @Override
         protected JSONArray doInBackground(String... params) {
 
             try {
-                jobj = sixPMCall(params[0]);
-                jarray = jobj.getJSONArray("results");
-                for (int i = 0; i < jarray.length(); i++) {
-                    JSONObject jbj = jarray.getJSONObject(i);
-                    String productId = jbj.getString("productId");
+                jObj = sixPMCall(params[0]);
+                jArray = jObj.getJSONArray("results");
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject jTempObj = jArray.getJSONObject(i);
+                    String productId = jTempObj.getString("productId");
 
                     if (productId.equals(targetProductId)) {
-                        targetUrlOn6pm = jbj.getString("productUrl");
+                        targetUrlOn6pm = jTempObj.getString("productUrl");
                         similarProductFound = true;
-                        String styleId = jbj.getString("styleId");
-                        if (styleId.equals(targetStyleid)) {
+                        String styleId = jTempObj.getString("styleId");
+                        if (styleId.equals(targetStyleId)) {
                             exactProductFound = true;
 
                         }
-                        String price = jbj.getString("price");
+                        String price = jTempObj.getString("price");
                         finalPrice = Double.parseDouble(price.replaceAll("[$,]", ""));
                         if (finalPrice <= targetPrice) {
-                            productName = jbj.getString("productName");
-                            productUrl = jbj.getString("productUrl");
+                            productName = jTempObj.getString("productName");
+                            productUrl = jTempObj.getString("productUrl");
                             break;
                         }
                     }
@@ -165,15 +174,17 @@ public class ProductPage extends AppCompatActivity {
             } catch (IOException|JSONException ex) {
                 ex.getLocalizedMessage();
             }
-            return jarray;
+            return jArray;
         }
 
         @Override
-        protected void onPostExecute(JSONArray jarray) {
+        protected void onPostExecute(JSONArray jArray) {
             if (exactProductFound) {
-                f6pmPrice.setText(getResources().getString(R.string.exact_product_found_label_product_page_activity,finalPrice));
+                f6pmPrice.setText(getResources().getString(
+                        R.string.exact_product_found_label_product_page_activity,finalPrice));
             } else if (similarProductFound) {
-                f6pmPrice.setText(getResources().getString(R.string.similar_product_found_product_page_activity,finalPrice));
+                f6pmPrice.setText(getResources().getString(
+                        R.string.similar_product_found_product_page_activity,finalPrice));
             }
             if (!exactProductFound && !similarProductFound) {
                 navigateButton.setVisibility(View.GONE);
@@ -181,11 +192,11 @@ public class ProductPage extends AppCompatActivity {
 
         }
 
-        private JSONObject sixPMCall(String Zurl) throws IOException, JSONException {
+        private JSONObject sixPMCall(String zUrl) throws IOException, JSONException {
             InputStream is = null;
-            JSONObject jobj = null;
+            JSONObject jObj = null;
             try {
-                URL url = new URL(Zurl);
+                URL url = new URL(zUrl);
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(15000);
@@ -193,7 +204,8 @@ public class ProductPage extends AppCompatActivity {
                 conn.connect();
                 int response = conn.getResponseCode();
                 if (response != 200) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.rest_call_failed), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(
+                            R.string.rest_call_failed), Toast.LENGTH_LONG).show();
                 } else {
                     is = conn.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -202,14 +214,14 @@ public class ProductPage extends AppCompatActivity {
                     while ((resStr = br.readLine()) != null) {
                         responseBuilder.append(resStr);
                     }
-                    jobj = new JSONObject(responseBuilder.toString());
+                    jObj = new JSONObject(responseBuilder.toString());
                 }
             } finally {
                 if (is != null) {
                     is.close();
                 }
             }
-            return jobj;
+            return jObj;
         }
     }
 }
