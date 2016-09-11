@@ -26,7 +26,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/enter_value_label_main_activity"
         android:id="@+id/textView"
-        android:layout_marginTop="99dp"
+        android:layout_marginTop="50dp"
         android:textColor="#030303"
         android:layout_below="@+id/welcomeTextView"
         android:layout_centerHorizontal="true" />
@@ -38,16 +38,17 @@
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_marginTop="31dp"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView"
+        android:maxLines="1"
+        android:singleLine="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit_button_main_activity"
         android:id="@+id/searchButton"
-        android:layout_marginTop="30dp"
+        android:onClick="showResults"
         android:layout_below="@+id/searchBox"
-        android:layout_centerHorizontal="true"
-        android:onClick="showResults"/>
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

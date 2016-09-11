@@ -17,4 +17,11 @@
     <string name="alert_title_product_results_activity">Oops!</string>
     <string name="share_me_button_product_page">Spread this happiness!</string>
     <string name="navigate_button_product_page">Take me there!</string>
+    <string name="product_name_textview_product_page">Product Name : </string>
+    <string name="brand_name_textview_product_page">Brand Name : </string>
+    <string name="original_price_textview_product_page">Original price : </string>
+    <string name="discount_textview_product_page">Discount : </string>
+    <string name="final_price_textview_product_page">Final Price : </string>
+    <string name="discount_label_card_view">"Hurry "</string>
+    <string name="discount_value_recycler_view_adapter_activity">" Offf!!"</string>
 </resources>

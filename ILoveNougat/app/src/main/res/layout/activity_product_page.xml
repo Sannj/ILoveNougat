@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Product Name"
+        android:text="@string/product_name_textview_product_page"
         android:id="@+id/Title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Brand Name : "
+        android:text="@string/brand_name_textview_product_page"
         android:id="@+id/pBrandName"
         android:layout_below="@+id/PImage"
         android:layout_alignParentStart="true"
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Original Price :"
+        android:text="@string/original_price_textview_product_page"
         android:id="@+id/pOrigPrice"
         android:layout_below="@+id/pBrandName"
         android:layout_alignParentStart="true"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Discount : "
+        android:text="@string/discount_textview_product_page"
         android:id="@+id/pDiscount"
         android:layout_below="@+id/pOrigPrice"
         android:layout_alignParentStart="true"
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Final Price : "
+        android:text="@string/final_price_textview_product_page"
         android:id="@+id/pFinalPrice"
         android:layout_below="@+id/pDiscount"
         android:layout_alignParentStart="true"
@@ -127,7 +127,8 @@
         android:id="@+id/navigateButton"
         android:layout_below="@+id/priceOn6pm"
         android:layout_centerInParent="true"
-        android:onClick="navigateMe"/>
+        android:onClick="navigateMe"
+        android:visibility="invisible" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

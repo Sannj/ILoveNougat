@@ -183,6 +183,7 @@ public class ProductPage extends AppCompatActivity {
                 f6pmPrice.setText(getResources().getString(
                         R.string.exact_product_found_label_product_page_activity,finalPrice));
             } else if (similarProductFound) {
+                navigateButton.setVisibility(View.VISIBLE);
                 f6pmPrice.setText(getResources().getString(
                         R.string.similar_product_found_product_page_activity,finalPrice));
             }

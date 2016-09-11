@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.discLabel.setVisibility(View.GONE);
         } else {
             dis = products.get(i).getDiscount();
-            dis += " Off!!!";
+            dis += this.context.getResources().getString(R.string.discount_value_recycler_view_adapter_activity);
             holder.discLabel.setVisibility(View.VISIBLE);
             holder.discount.setVisibility(View.VISIBLE);
             holder.origPrice.setVisibility(View.VISIBLE);
