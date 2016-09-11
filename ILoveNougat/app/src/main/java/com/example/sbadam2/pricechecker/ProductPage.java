@@ -2,6 +2,8 @@ package com.example.sbadam2.pricechecker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -27,19 +29,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
-import javax.net.ssl.HttpsURLConnection;
-
 public class ProductPage extends AppCompatActivity {
 
-    public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
-    public final static String URL_PROTOCOL = "http";
-    public final static String URL_AUTHORITY = "api.6pm.com";
-    public final static String URL_PATH = "Search";
-    public final static String URL_QUERY_PARAMETER_TERM = "term";
-    public final static String URL_QUERY_PARAMETER_KEY = "key";
-    public final static String URL_QUERY_PARAMETER_LIMIT = "limit";
-    public final static String URL_QUERY_PARAMETER_LIMIT_VALUE = "25";
-
+    String URL_PROTOCOL_6PM;
+    String AUTH_KEY_6PM;
+    String URL_AUTHORITY_6PM;
+    String URL_PATH;
+    String URL_QUERY_PARAMETER_TERM;
+    String URL_QUERY_PARAMETER_KEY;
+    String URL_QUERY_PARAMETER_LIMIT;
+    String URL_QUERY_PARAMETER_LIMIT_VALUE;
     String productName;
     double finalPrice;
     String productUrl;
@@ -64,6 +63,22 @@ public class ProductPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_page);
+
+        try {
+            ActivityInfo ai = getPackageManager()
+                    .getActivityInfo(this.getComponentName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            AUTH_KEY_6PM = bundle.getString("AUTH_KEY_6PM");
+            URL_PROTOCOL_6PM = bundle.getString("URL_PROTOCOL_6PM");
+            URL_AUTHORITY_6PM = bundle.getString("URL_AUTHORITY_6PM");
+            URL_PATH = bundle.getString("URL_PATH");
+            URL_QUERY_PARAMETER_TERM = bundle.getString("URL_QUERY_PARAMETER_TERM");
+            URL_QUERY_PARAMETER_KEY = bundle.getString("URL_QUERY_PARAMETER_KEY");
+            URL_QUERY_PARAMETER_LIMIT = bundle.getString("URL_QUERY_PARAMETER_LIMIT");
+            URL_QUERY_PARAMETER_LIMIT_VALUE = bundle.getString("URL_QUERY_PARAMETER_LIMIT_VALUE");
+        } catch (PackageManager.NameNotFoundException | NullPointerException e) {
+            e.getLocalizedMessage();
+        }
         Intent intent = getIntent();
         p = intent.getParcelableExtra("product");
         pName = (TextView) findViewById(R.id.Title);
@@ -134,7 +149,7 @@ public class ProductPage extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri sixPmUri = new Uri.Builder().scheme(URL_PROTOCOL).authority(URL_AUTHORITY).path(URL_PATH)
+            Uri sixPmUri = new Uri.Builder().scheme(URL_PROTOCOL_6PM).authority(URL_AUTHORITY_6PM).path(URL_PATH)
                     .appendQueryParameter(URL_QUERY_PARAMETER_TERM, targetProductId)
                     .appendQueryParameter(URL_QUERY_PARAMETER_KEY, AUTH_KEY_6PM)
                     .appendQueryParameter(URL_QUERY_PARAMETER_LIMIT, URL_QUERY_PARAMETER_LIMIT_VALUE)

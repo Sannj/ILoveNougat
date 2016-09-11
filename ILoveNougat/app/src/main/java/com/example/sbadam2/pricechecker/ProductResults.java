@@ -1,8 +1,9 @@
 package com.example.sbadam2.pricechecker;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -38,15 +39,14 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ProductResults extends AppCompatActivity {
 
-    public final static String AUTH_KEY_ZAPPOS = "b743e26728e16b81da139182bb2094357c31d331";
-    public final static String URL_PROTOCOL = "https";
-    public final static String URL_AUTHORITY = "api.zappos.com";
-    public final static String URL_PATH = "Search";
-    public final static String URL_QUERY_PARAMETER_TERM = "term";
-    public final static String URL_QUERY_PARAMETER_KEY = "key";
-    public final static String URL_QUERY_PARAMETER_LIMIT = "limit";
-    public final static String URL_QUERY_PARAMETER_LIMIT_VALUE = "25";
-
+    String AUTH_KEY_ZAPPOS;
+    String URL_PROTOCOL_ZAPPOS;
+    String URL_AUTHORITY_ZAPPOS;
+    String URL_PATH;
+    String URL_QUERY_PARAMETER_TERM;
+    String URL_QUERY_PARAMETER_KEY;
+    String URL_QUERY_PARAMETER_LIMIT;
+    String URL_QUERY_PARAMETER_LIMIT_VALUE;
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     ArrayList<Product> products = new ArrayList<Product>();
@@ -58,6 +58,23 @@ public class ProductResults extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_results);
+
+        try {
+            ActivityInfo ai = getPackageManager()
+                    .getActivityInfo(this.getComponentName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            AUTH_KEY_ZAPPOS = bundle.getString("AUTH_KEY_ZAPPOS");
+            URL_PROTOCOL_ZAPPOS = bundle.getString("URL_PROTOCOL_ZAPPOS");
+            URL_AUTHORITY_ZAPPOS = bundle.getString("URL_AUTHORITY_ZAPPOS");
+            URL_PATH = bundle.getString("URL_PATH");
+            URL_QUERY_PARAMETER_TERM = bundle.getString("URL_QUERY_PARAMETER_TERM");
+            URL_QUERY_PARAMETER_KEY = bundle.getString("URL_QUERY_PARAMETER_KEY");
+            URL_QUERY_PARAMETER_LIMIT = bundle.getString("URL_QUERY_PARAMETER_LIMIT");
+            URL_QUERY_PARAMETER_LIMIT_VALUE = bundle.getString("URL_QUERY_PARAMETER_LIMIT_VALUE");
+        } catch (PackageManager.NameNotFoundException | NullPointerException e) {
+          e.getLocalizedMessage();
+        }
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -93,7 +110,7 @@ public class ProductResults extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri zapposUri = new Uri.Builder().scheme(URL_PROTOCOL).authority(URL_AUTHORITY).path(URL_PATH)
+            Uri zapposUri = new Uri.Builder().scheme(URL_PROTOCOL_ZAPPOS).authority(URL_AUTHORITY_ZAPPOS).path(URL_PATH)
                     .appendQueryParameter(URL_QUERY_PARAMETER_TERM, searchTerm)
                     .appendQueryParameter(URL_QUERY_PARAMETER_KEY, AUTH_KEY_ZAPPOS)
                     .appendQueryParameter(URL_QUERY_PARAMETER_LIMIT, URL_QUERY_PARAMETER_LIMIT_VALUE)

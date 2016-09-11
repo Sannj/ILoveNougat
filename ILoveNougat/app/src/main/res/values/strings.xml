@@ -24,4 +24,16 @@
     <string name="final_price_textview_product_page">Final Price : </string>
     <string name="discount_label_card_view">"Hurry "</string>
     <string name="discount_value_recycler_view_adapter_activity">" Offf!!"</string>
+    <string name="AUTH_KEY_ZAPPOS">"b743e26728e16b81da139182bb2094357c31d331"</string>
+    <string name="URL_PROTOCOL_ZAPPOS">"https"</string>
+    <string name="URL_AUTHORITY_ZAPPOS">"api.zappos.com"</string>
+    <string name="URL_PATH">"Search"</string>
+    <string name="URL_QUERY_PARAMETER_TERM">"term"</string>
+    <string name="URL_QUERY_PARAMETER_KEY">"key"</string>
+    <string name="URL_QUERY_PARAMETER_LIMIT">"limit"</string>
+    <string name="URL_QUERY_PARAMETER_LIMIT_VALUE">"40"</string>
+    <string name="AUTH_KEY_6PM">"524f01b7e2906210f7bb61dcbe1bfea26eb722eb"</string>
+    <string name="URL_PROTOCOL_6PM">"http"</string>
+    <string name="URL_AUTHORITY_6PM">"api.6pm.com"</string>
+
 </resources>
