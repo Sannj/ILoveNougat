@@ -40,7 +40,9 @@
         android:layout_marginTop="31dp"
         android:layout_alignEnd="@+id/textView"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textColor="#000"
+        android:textCursorDrawable = "@null" />
 
     <Button
         android:layout_width="wrap_content"

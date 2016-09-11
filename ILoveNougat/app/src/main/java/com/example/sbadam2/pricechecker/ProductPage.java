@@ -31,6 +31,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class ProductPage extends AppCompatActivity {
 
     public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
+    public final static String URL_PROTOCOL = "https";
+    public final static String URL_AUTHORITY = "api.6pm.com";
+    public final static String URL_PATH = "Search";
+    public final static String URL_QUERY_PARAMETER_TERM = "term";
+    public final static String URL_QUERY_PARAMETER_KEY = "key";
+    public final static String URL_QUERY_PARAMETER_LIMIT = "limit";
+    public final static String URL_QUERY_PARAMETER_LIMIT_VALUE = "25";
 
     String productName;
     double finalPrice;
@@ -126,10 +133,10 @@ public class ProductPage extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri sixPmUri = new Uri.Builder().scheme("https").authority("api.6pm.com").path("Search")
-                    .appendQueryParameter("term", targetProductId)
-                    .appendQueryParameter("key", AUTH_KEY_6PM)
-                    .appendQueryParameter("limit", "25")
+            Uri sixPmUri = new Uri.Builder().scheme(URL_PROTOCOL).authority(URL_AUTHORITY).path(URL_PATH)
+                    .appendQueryParameter(URL_QUERY_PARAMETER_TERM, targetProductId)
+                    .appendQueryParameter(URL_QUERY_PARAMETER_KEY, AUTH_KEY_6PM)
+                    .appendQueryParameter(URL_QUERY_PARAMETER_LIMIT, URL_QUERY_PARAMETER_LIMIT_VALUE)
                     .build();
             new RestCallActivity().execute(sixPmUri.toString());
         } else {

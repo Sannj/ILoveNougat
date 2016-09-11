@@ -14,7 +14,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -37,6 +39,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class ProductResults extends AppCompatActivity {
 
     public final static String AUTH_KEY_ZAPPOS = "b743e26728e16b81da139182bb2094357c31d331";
+    public final static String URL_PROTOCOL = "https";
+    public final static String URL_AUTHORITY = "api.zappos.com";
+    public final static String URL_PATH = "Search";
+    public final static String URL_QUERY_PARAMETER_TERM = "term";
+    public final static String URL_QUERY_PARAMETER_KEY = "key";
+    public final static String URL_QUERY_PARAMETER_LIMIT = "limit";
+    public final static String URL_QUERY_PARAMETER_LIMIT_VALUE = "25";
 
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
@@ -55,17 +64,20 @@ public class ProductResults extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         alertDialog = new AlertDialog.Builder(ProductResults.this).create();
+        Button newButton = new Button(this);
+        newButton.setText(getResources().getString(R.string.alert_ok_button_product_results_activity));
+        newButton.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+        newButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        alertDialog.setView(newButton);
         alertDialog.setTitle(getResources().getString(R.string.alert_title_product_results_activity));
         alertDialog.setMessage(getResources().getString(R.string.no_products_alert_product_results_activity));
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().getString(R.string.alert_ok_button_product_results_activity),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
         try {
             checkConnection();
         } catch (MalformedURLException|ExecutionException|InterruptedException e) {
@@ -81,10 +93,10 @@ public class ProductResults extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Uri zapposUri = new Uri.Builder().scheme("https").authority("api.zappos.com").path("Search")
-                    .appendQueryParameter("term", searchTerm)
-                    .appendQueryParameter("key", AUTH_KEY_ZAPPOS)
-                    .appendQueryParameter("limit", "25")
+            Uri zapposUri = new Uri.Builder().scheme(URL_PROTOCOL).authority(URL_AUTHORITY).path(URL_PATH)
+                    .appendQueryParameter(URL_QUERY_PARAMETER_TERM, searchTerm)
+                    .appendQueryParameter(URL_QUERY_PARAMETER_KEY, AUTH_KEY_ZAPPOS)
+                    .appendQueryParameter(URL_QUERY_PARAMETER_LIMIT, URL_QUERY_PARAMETER_LIMIT_VALUE)
                     .build();
             new RestCallActivity().execute(zapposUri.toString());
         } else {
