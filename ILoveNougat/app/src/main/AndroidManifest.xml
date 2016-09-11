@@ -18,25 +18,57 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ProductResults" >
-            <meta-data android:name="AUTH_KEY_ZAPPOS" android:value="@string/AUTH_KEY_ZAPPOS"/>
-            <meta-data android:name="URL_PROTOCOL_ZAPPOS" android:value="@string/URL_PROTOCOL_ZAPPOS" />
-            <meta-data android:name="URL_AUTHORITY_ZAPPOS" android:value="@string/URL_AUTHORITY_ZAPPOS" />
-            <meta-data android:name="URL_PATH" android:value="@string/URL_PATH" />
-            <meta-data android:name="URL_QUERY_PARAMETER_TERM" android:value="@string/URL_QUERY_PARAMETER_TERM" />
-            <meta-data android:name="URL_QUERY_PARAMETER_KEY" android:value="@string/URL_QUERY_PARAMETER_KEY" />
-            <meta-data android:name="URL_QUERY_PARAMETER_LIMIT" android:value="@string/URL_QUERY_PARAMETER_LIMIT" />
-            <meta-data android:name="URL_QUERY_PARAMETER_LIMIT_VALUE" android:value="@string/URL_QUERY_PARAMETER_LIMIT_VALUE" />
+        <activity android:name=".ProductResults">
+            <meta-data
+                android:name="AUTH_KEY_ZAPPOS"
+                android:value="@string/AUTH_KEY_ZAPPOS" />
+            <meta-data
+                android:name="URL_PROTOCOL_ZAPPOS"
+                android:value="@string/URL_PROTOCOL_ZAPPOS" />
+            <meta-data
+                android:name="URL_AUTHORITY_ZAPPOS"
+                android:value="@string/URL_AUTHORITY_ZAPPOS" />
+            <meta-data
+                android:name="URL_PATH"
+                android:value="@string/URL_PATH" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_TERM"
+                android:value="@string/URL_QUERY_PARAMETER_TERM" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_KEY"
+                android:value="@string/URL_QUERY_PARAMETER_KEY" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_LIMIT"
+                android:value="@string/URL_QUERY_PARAMETER_LIMIT" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_LIMIT_VALUE"
+                android:value="@string/URL_QUERY_PARAMETER_LIMIT_VALUE" />
         </activity>
-        <activity android:name=".ProductPage" >
-            <meta-data android:name="AUTH_KEY_6PM" android:value="@string/AUTH_KEY_6PM"/>
-            <meta-data android:name="URL_PROTOCOL_6PM" android:value="@string/URL_PROTOCOL_6PM" />
-            <meta-data android:name="URL_AUTHORITY_6PM" android:value="@string/URL_AUTHORITY_6PM" />
-            <meta-data android:name="URL_PATH" android:value="@string/URL_PATH" />
-            <meta-data android:name="URL_QUERY_PARAMETER_TERM" android:value="@string/URL_QUERY_PARAMETER_TERM" />
-            <meta-data android:name="URL_QUERY_PARAMETER_KEY" android:value="@string/URL_QUERY_PARAMETER_KEY" />
-            <meta-data android:name="URL_QUERY_PARAMETER_LIMIT" android:value="@string/URL_QUERY_PARAMETER_LIMIT" />
-            <meta-data android:name="URL_QUERY_PARAMETER_LIMIT_VALUE" android:value="@string/URL_QUERY_PARAMETER_LIMIT_VALUE" />
+        <activity android:name=".ProductPage">
+            <meta-data
+                android:name="AUTH_KEY_6PM"
+                android:value="@string/AUTH_KEY_6PM" />
+            <meta-data
+                android:name="URL_PROTOCOL_6PM"
+                android:value="@string/URL_PROTOCOL_6PM" />
+            <meta-data
+                android:name="URL_AUTHORITY_6PM"
+                android:value="@string/URL_AUTHORITY_6PM" />
+            <meta-data
+                android:name="URL_PATH"
+                android:value="@string/URL_PATH" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_TERM"
+                android:value="@string/URL_QUERY_PARAMETER_TERM" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_KEY"
+                android:value="@string/URL_QUERY_PARAMETER_KEY" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_LIMIT"
+                android:value="@string/URL_QUERY_PARAMETER_LIMIT" />
+            <meta-data
+                android:name="URL_QUERY_PARAMETER_LIMIT_VALUE"
+                android:value="@string/URL_QUERY_PARAMETER_LIMIT_VALUE" />
 
         </activity>
 

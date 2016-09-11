@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,12 +59,13 @@ public class ProductPage extends AppCompatActivity {
     Button navigateButton;
     String targetUrlOn6pm;
     String zapposProductUrl;
+    private static final String TAG = "ProductPageActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_page);
-
+        Log.v(TAG,"Entered Product Page ACtivity");
         try {
             ActivityInfo ai = getPackageManager()
                     .getActivityInfo(this.getComponentName(), PackageManager.GET_META_DATA);
@@ -76,11 +78,13 @@ public class ProductPage extends AppCompatActivity {
             URL_QUERY_PARAMETER_KEY = bundle.getString("URL_QUERY_PARAMETER_KEY");
             URL_QUERY_PARAMETER_LIMIT = bundle.getString("URL_QUERY_PARAMETER_LIMIT");
             URL_QUERY_PARAMETER_LIMIT_VALUE = bundle.getString("URL_QUERY_PARAMETER_LIMIT_VALUE");
+            Log.v(TAG,"fetched values from manifest");
         } catch (PackageManager.NameNotFoundException | NullPointerException e) {
             e.getLocalizedMessage();
         }
         Intent intent = getIntent();
         p = intent.getParcelableExtra("product");
+        Log.v(TAG,"Got the product details");
         pName = (TextView) findViewById(R.id.Title);
         navigateButton = (Button) findViewById(R.id.navigateButton);
         bName = (TextView) findViewById(R.id.BrandNameValue);
@@ -98,9 +102,10 @@ public class ProductPage extends AppCompatActivity {
         String temp = p.getFinalPrice();
         targetPrice = Double.parseDouble(temp.replaceAll("[$,]", ""));
         f6pmPrice = (TextView) findViewById(R.id.priceOn6pm);
+        Log.v(TAG,"Displaying the product details");
         try {
             checkConnection();
-        } catch (MalformedURLException|ExecutionException|InterruptedException e) {
+        } catch (MalformedURLException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         dis = dis.substring(0, 1);
@@ -128,6 +133,7 @@ public class ProductPage extends AppCompatActivity {
 
 
     public void navigateMe(View view) {
+        Log.v(TAG,"Opening the web browser");
         Uri uriUrl = Uri.parse(targetUrlOn6pm);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
@@ -135,6 +141,7 @@ public class ProductPage extends AppCompatActivity {
 
 
     public void shareMe(View view) {
+        Log.v(TAG,"Sharing the product details");
         Intent intent2 = new Intent();
         intent2.setAction(Intent.ACTION_SEND);
         intent2.setType("text/plain");
@@ -146,6 +153,7 @@ public class ProductPage extends AppCompatActivity {
 
 
     public void checkConnection() throws MalformedURLException, ExecutionException, InterruptedException {
+        Log.v(TAG,"Checking if there is an active internet connection");
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -169,10 +177,11 @@ public class ProductPage extends AppCompatActivity {
 
         @Override
         protected JSONArray doInBackground(String... params) {
-
+            Log.v(TAG,"Starting async task, making a call to 6pm for the exact product.");
             try {
                 jObj = sixPMCall(params[0]);
                 jArray = jObj.getJSONArray("results");
+                Log.v(TAG,"Comparing the poducts and their prices");
                 for (int i = 0; i < jArray.length(); i++) {
                     JSONObject jTempObj = jArray.getJSONObject(i);
                     String productId = jTempObj.getString("productId");
@@ -194,7 +203,7 @@ public class ProductPage extends AppCompatActivity {
                         }
                     }
                 }
-            } catch (IOException|JSONException ex) {
+            } catch (IOException | JSONException ex) {
                 ex.getLocalizedMessage();
             }
             return jArray;
@@ -202,13 +211,14 @@ public class ProductPage extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jArray) {
+            Log.v(TAG,"Displaying appropriate results");
             if (exactProductFound) {
                 f6pmPrice.setText(getResources().getString(
-                        R.string.exact_product_found_label_product_page_activity,finalPrice));
+                        R.string.exact_product_found_label_product_page_activity, finalPrice));
             } else if (similarProductFound) {
                 navigateButton.setVisibility(View.VISIBLE);
                 f6pmPrice.setText(getResources().getString(
-                        R.string.similar_product_found_product_page_activity,finalPrice));
+                        R.string.similar_product_found_product_page_activity, finalPrice));
             }
             if (!exactProductFound && !similarProductFound) {
                 navigateButton.setVisibility(View.GONE);
@@ -220,6 +230,7 @@ public class ProductPage extends AppCompatActivity {
             InputStream is = null;
             JSONObject jObj = null;
             try {
+                Log.v(TAG,"Making the rest call to 6pm");
                 URL url = new URL(zUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
@@ -240,12 +251,10 @@ public class ProductPage extends AppCompatActivity {
                     }
                     jObj = new JSONObject(responseBuilder.toString());
                 }
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 e.getLocalizedMessage();
-            }
-            finally {
+            } finally {
                 if (is != null) {
                     is.close();
                 }

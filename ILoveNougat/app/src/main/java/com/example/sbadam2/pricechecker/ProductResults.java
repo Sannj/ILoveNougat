@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ProductResults extends AppCompatActivity {
 
+    private static final String TAG = "ProductResultsActivity";
+
     String AUTH_KEY_ZAPPOS;
     String URL_PROTOCOL_ZAPPOS;
     String URL_AUTHORITY_ZAPPOS;
@@ -58,7 +61,7 @@ public class ProductResults extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_results);
-
+        Log.v(TAG,"Product Results Activity is triggered");
         try {
             ActivityInfo ai = getPackageManager()
                     .getActivityInfo(this.getComponentName(), PackageManager.GET_META_DATA);
@@ -71,23 +74,23 @@ public class ProductResults extends AppCompatActivity {
             URL_QUERY_PARAMETER_KEY = bundle.getString("URL_QUERY_PARAMETER_KEY");
             URL_QUERY_PARAMETER_LIMIT = bundle.getString("URL_QUERY_PARAMETER_LIMIT");
             URL_QUERY_PARAMETER_LIMIT_VALUE = bundle.getString("URL_QUERY_PARAMETER_LIMIT_VALUE");
+            Log.v(TAG,"Fetching config values from manifest");
         } catch (PackageManager.NameNotFoundException | NullPointerException e) {
-          e.getLocalizedMessage();
+            e.getLocalizedMessage();
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
-
         alertDialog = new AlertDialog.Builder(ProductResults.this).create();
         Button newButton = new Button(this);
         newButton.setText(getResources().getString(R.string.alert_ok_button_product_results_activity));
-        newButton.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-        newButton.setOnClickListener(new View.OnClickListener(){
+        newButton.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        newButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 alertDialog.dismiss();
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -96,8 +99,9 @@ public class ProductResults extends AppCompatActivity {
         alertDialog.setTitle(getResources().getString(R.string.alert_title_product_results_activity));
         alertDialog.setMessage(getResources().getString(R.string.no_products_alert_product_results_activity));
         try {
+            Log.v(TAG,"Checking for active internet connection");
             checkConnection();
-        } catch (MalformedURLException|ExecutionException|InterruptedException e) {
+        } catch (MalformedURLException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -115,6 +119,7 @@ public class ProductResults extends AppCompatActivity {
                     .appendQueryParameter(URL_QUERY_PARAMETER_KEY, AUTH_KEY_ZAPPOS)
                     .appendQueryParameter(URL_QUERY_PARAMETER_LIMIT, URL_QUERY_PARAMETER_LIMIT_VALUE)
                     .build();
+            Log.v(TAG,"Making rest api call");
             new RestCallActivity().execute(zapposUri.toString());
         } else {
             Toast.makeText(getApplicationContext(), getResources().getString(
@@ -135,11 +140,11 @@ public class ProductResults extends AppCompatActivity {
 
         @Override
         protected JSONArray doInBackground(String... params) {
-
+            Log.v(TAG,"Querying zappos for the search term");
             try {
                 jObj = zapposCall(params[0]);
                 jArray = jObj.getJSONArray("results");
-                if(jArray.length() == 0){
+                if (jArray.length() == 0) {
                     foundResults = false;
                 }
                 for (int i = 0; i < jArray.length(); i++) {
@@ -159,7 +164,8 @@ public class ProductResults extends AppCompatActivity {
                     products.add(p);
                     publishProgress();
                 }
-            } catch (IOException|JSONException ex) {
+                Log.v(TAG,"Added products to the arraylist");
+            } catch (IOException | JSONException ex) {
                 ex.getLocalizedMessage();
             }
             return jArray;
@@ -167,10 +173,9 @@ public class ProductResults extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jArray) {
-            if(!foundResults){
+            if (!foundResults) {
                 alertDialog.show();
-            }
-            else {
+            } else {
                 progressBar.setVisibility(View.GONE);
                 adapter = new RecyclerViewAdapter(ProductResults.this, products);
                 recyclerView.setAdapter(adapter);
@@ -181,6 +186,7 @@ public class ProductResults extends AppCompatActivity {
         private JSONObject zapposCall(String zUrl) throws IOException, JSONException {
             InputStream is = null;
             JSONObject jObj = null;
+            Log.v(TAG,"Making the rest call to zappos");
             try {
                 URL url = new URL(zUrl);
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -201,8 +207,7 @@ public class ProductResults extends AppCompatActivity {
                     }
                     jObj = new JSONObject(responseBuilder.toString());
                 }
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 e.getLocalizedMessage();
             } finally {

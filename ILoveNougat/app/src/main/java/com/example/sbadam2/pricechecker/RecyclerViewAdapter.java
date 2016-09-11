@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
  * Created by sbadam2 on 8/29/2016.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ProductViewHolder> {
+
+    private static final String TAG = "RecyclerViewAdapter";
 
     ArrayList<Product> products = new ArrayList<>();
     private Context context;
@@ -36,6 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final ProductViewHolder holder, int i) {
+        Log.v(TAG,"Displaying the results on recycler view");
         String dis = products.get(i).getDiscount();
         dis = dis.substring(0, 1);
         int disc = Integer.parseInt(dis);

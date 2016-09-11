@@ -35,5 +35,4 @@
     <string name="AUTH_KEY_6PM">"524f01b7e2906210f7bb61dcbe1bfea26eb722eb"</string>
     <string name="URL_PROTOCOL_6PM">"http"</string>
     <string name="URL_AUTHORITY_6PM">"api.6pm.com"</string>
-
 </resources>
