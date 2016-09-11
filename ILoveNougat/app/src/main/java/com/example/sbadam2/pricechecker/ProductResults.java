@@ -184,6 +184,10 @@ public class ProductResults extends AppCompatActivity {
                     }
                     jObj = new JSONObject(responseBuilder.toString());
                 }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+                e.getLocalizedMessage();
             } finally {
                 if (is != null) {
                     is.close();

@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
@@ -31,7 +32,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ProductPage extends AppCompatActivity {
 
     public final static String AUTH_KEY_6PM = "524f01b7e2906210f7bb61dcbe1bfea26eb722eb";
-    public final static String URL_PROTOCOL = "https";
+    public final static String URL_PROTOCOL = "http";
     public final static String URL_AUTHORITY = "api.6pm.com";
     public final static String URL_PATH = "Search";
     public final static String URL_QUERY_PARAMETER_TERM = "term";
@@ -205,7 +206,7 @@ public class ProductPage extends AppCompatActivity {
             JSONObject jObj = null;
             try {
                 URL url = new URL(zUrl);
-                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(15000);
                 conn.setRequestMethod("GET");
@@ -224,7 +225,12 @@ public class ProductPage extends AppCompatActivity {
                     }
                     jObj = new JSONObject(responseBuilder.toString());
                 }
-            } finally {
+            }
+            catch(Exception e){
+                e.printStackTrace();
+                e.getLocalizedMessage();
+            }
+            finally {
                 if (is != null) {
                     is.close();
                 }
