@@ -54,7 +54,7 @@ public class ProductResults extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         alertDialog = new AlertDialog.Builder(ProductResults.this).create();
-        alertDialog.setTitle("Alert");
+        alertDialog.setTitle(getResources().getString(R.string.alert_title_product_results_activity));
         alertDialog.setMessage(getResources().getString(R.string.no_products_alert_product_results_activity));
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().getString(R.string.alert_ok_button_product_results_activity),
                 new DialogInterface.OnClickListener() {

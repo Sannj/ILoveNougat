@@ -1,5 +1,6 @@
 package com.example.sbadam2.pricechecker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -109,12 +110,14 @@ public class ProductPage extends AppCompatActivity {
         startActivity(launchBrowser);
     }
 
+
     public void shareMe(View view) {
         Intent intent2 = new Intent();
         intent2.setAction(Intent.ACTION_SEND);
         intent2.setType("text/plain");
-        intent2.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_product_url_text_product_page_activity) + zapposProductUrl);
+        intent2.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_product_url_text_product_page_activity, zapposProductUrl));
         startActivity(Intent.createChooser(intent2, getResources().getString(R.string.share_via_product_page_activity)));
+
     }
 
 

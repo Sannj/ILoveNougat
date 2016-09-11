@@ -10,10 +10,11 @@
     <string name="rest_call_failed">"There was an issue with the request. Please restart the app."</string>
     <string name="original_price_as_final_price_label_product_page_activity">"Price :"</string>
     <string name="original_price_label_product_page_activity">"Original Price :"</string>
-    <string name="share_product_url_text_product_page_activity">"Check out this product on Zappos!"</string>
+    <string name="share_product_url_text_product_page_activity">"Check out this product on Zappos!%1$s"</string>
     <string name="share_via_product_page_activity">Share via</string>
     <string name="exact_product_found_label_product_page_activity">"Congratulations! This product is only for %1$s on 6pm!! Checkout 6pm.com now!"</string>
     <string name="similar_product_found_product_page_activity">"6pm.com has similar products for a price as low as $%1$s! Check it out!"</string>
-
-
+    <string name="alert_title_product_results_activity">Oops!</string>
+    <string name="share_me_button_product_page">Share me!</string>
+    <string name="navigate_button_product_page">Take me there!</string>
 </resources>
