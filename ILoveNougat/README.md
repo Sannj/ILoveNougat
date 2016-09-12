@@ -20,7 +20,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Pre-requisites
 
-* Android SDK 24
+* Android SDK 17
 * Android Build Tools v24.0.1
 * Android Support Repository
 (Android Studio latest version will take care of all the above)
@@ -30,11 +30,11 @@ These instructions will get you a copy of the project up and running on your loc
 ###<u>I have all these. What next?</u>
 
 ####Getting the project via Git : 
-* Go to your favorite terminal.
+* Open your favorite terminal.
 * Then, `git clone <https repo address>`. 
 * Once complete, open Android Studio and choose the project path.  
 
-TADA! It's done! Well, I mean you have the project. Now, let's run this!
+TADA! It's done! Well, I mean you have the project. Now, let's run this! :smiley:
 
 Refer to this link if you are stuck at any point of time.
 [Github Help](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/ "Title")  
@@ -44,15 +44,14 @@ Refer to this link if you are stuck at any point of time.
 All the source files are in - 
 `app/src/main/java/com/example/sbadam2/pricechecker`
 
-Yeah, that was long! 
-Now, right click on `MainActivity.java` and hit run.
+Yeah, that was long! :no_mouth:
 
-Choose your emulator device or connect your phone.
-
-And you will see the first screen of the app.
+1. Now, right click on `MainActivity.java` and hit run.
+2. Choose your emulator device or connect your phone.
+3. And you will see the first screen of the app.
 
 #####What am I supposed to enter??
-Yaaay! Testing time!
+Yaaay! Testing time! :smile:
 
 * On the first screen, you should see a search box and a submit button.
 * Now, enter your favorite product details in it. It can be anything as specific as `Kate Spade` or as generic as `heels`. 
@@ -61,10 +60,10 @@ Yaaay! Testing time!
 * Once you spotted the picture of the product you like, Click it!
 * You can see details about the product you liked while the app queries 6pm for the exact/similar products. 
 * If the app finds the same or a similar product for a lesser price then you can see a button `Take me there`. This button will open the default web browser for you with the 6pm product page. 
-* If not, this button will not appear. 
+* If not, this button will not appear. :worried: 
 * Now that you found a product you liked, how about you let your friends know too? Click the `Spread the happiness` button. Choose your favorite sharing app and send it away! 
 
-Hope you had fun testing out the app.
+Hope you had fun testing out the app. :sweat_smile:
 
 #####And now a little info about the <u>Technical details</u>:
 * The first screen is `MainActivity.java`. This is the launching activity. This is a simple activity with couple of TextViews, a EditText and a button.
@@ -78,10 +77,10 @@ Hope you had fun testing out the app.
 * You can click on `Take me there` and this will open your default web browser with the `6pm product link`. 
 * You can click on `Spread this happiness` and you will be asked to choose an app to share the 'zappos product'. 
 
-And that's the overall functionality of the app.
+And that's the overall functionality of the app. :simple_smile:
 
 #####Running the tests.
-Well, yes I did write a few tests and they are in `MainActivityTests.java` file.  
+Well, yes I did write a few tests and they are in `MainActivityTests.java` :information_desk_person: 
 
 1. Just right click on this file and click run. 
 2. Android Studio will ask you to choose your device. 
