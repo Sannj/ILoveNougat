@@ -60,7 +60,7 @@ Yaaay! Testing time! :smile:
 * Once you spotted the picture of the product you like, Click it!
 * You can see details about the product you liked while the app queries 6pm for the exact/similar products. 
 * If the app finds the same or a similar product for a lesser price then you can see a button `Take me there`. This button will open the default web browser for you with the 6pm product page. 
-* If not, this button will not appear. :worried: 
+* If not, this button will not appear.
 * Now that you found a product you liked, how about you let your friends know too? Click the `Spread the happiness` button. Choose your favorite sharing app and send it away! 
 
 Hope you had fun testing out the app. :sweat_smile:
@@ -77,7 +77,7 @@ Hope you had fun testing out the app. :sweat_smile:
 * You can click on `Take me there` and this will open your default web browser with the `6pm product link`. 
 * You can click on `Spread this happiness` and you will be asked to choose an app to share the 'zappos product'. 
 
-And that's the overall functionality of the app. :simple_smile:
+And that's the overall functionality of the app :smile:
 
 #####Running the tests.
 Well, yes I did write a few tests and they are in `MainActivityTests.java` :information_desk_person: 
