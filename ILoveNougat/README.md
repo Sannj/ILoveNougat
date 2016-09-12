@@ -52,22 +52,35 @@ Choose your emulator device or connect your phone.
 And you will see the first screen of the app.
 
 #####What am I supposed to enter??
+Yaaay! Testing time!
 
+* On the first screen, you should see a search box and a submit button.
+* Now, enter your favorite product details in it. It can be anything as specific as `Kate Spade` or as generic as `heels`. 
+* Now, the app will quickly ask Zappos for your favorite product and display them for you.
+* You can scroll down and look at all of them.
+* Once you spotted the picture of the product you like, Click it!
+* You can see details about the product you liked while the app queries 6pm for the exact/similar products. 
+* If the app finds the same or a similar product for a lesser price then you can see a button `Take me there`. This button will open the default web browser for you with the 6pm product page. 
+* If not, this button will not appear. 
+* Now that you found a product you liked, how about you let your friends know too? Click the `Spread the happiness` button. Choose your favorite sharing app and send it away! 
 
-#####Technical details.
-* The initial screen is the `MainActivity.java`. This is the launching activity. Here, you will see a search box and a `Get my product!` button. Enter your query and hit the button.
-* The next screen is the `ProductResults.java` activity. Here you will either get your results or an alert dialog [saying no products were found] depending on your search query on the previous screen.
-* You will have a list of products on this screen. You can see the product image, it's name, it's price. 
+Hope you had fun testing out the app.
+
+#####And now a little info about the <u>Technical details</u>:
+* The first screen is `MainActivity.java`. This is the launching activity. This is a simple activity with couple of TextViews, a EditText and a button.
+* The next screen that you get is `ProductResults.java` activity. Here you will either get your results or an alert dialog (saying no products were found) depending on your search query on the previous screen. The restcall to the Zappos API is made here.
+* You can see the alert dialog by entering any gibberish text like `blaahblaah`.
+* Otherwise, you will have a list of products on this screen. Each product is placed on a CardView and these bunch of CardViews are placed on the RecyclerView.
 * All the product cards are clickable. You can click on anyone of the product you like.
 * On click, you will be redirected to `ProductPage.java` activity. Here, you can see an enlarged image of the product.
-* Nope, we are not done yet. 
-* If the product you chose on `zappos.com` and has a similar product on `6pm.com` then you'll see two buttons `Take me there` and `Spread this happiness`. (Enter `heels` as your search query and click the first product `Charm Heel` to see this behavior).
+* Nope, we are not done yet. This activity has the business logic and also the rest call to 6pm API is made here.
+* If the product you chose on `Zappos.com` and has a similar product on `6pm.com` then you'll see two buttons `Take me there` and `Spread this happiness`. (Enter `heels` as your search query and click the first product `Charm Heel` to see this behavior).
 * You can click on `Take me there` and this will open your default web browser with the `6pm product link`. 
 * You can click on `Spread this happiness` and you will be asked to choose an app to share the 'zappos product'. 
 
-Hope you had fun testing out the app. That's the overall functionality of the app.
+And that's the overall functionality of the app.
 
-#####Running the test.
+#####Running the tests.
 Well, yes I did write a few tests and they are in `MainActivityTests.java` file.  
 
 1. Just right click on this file and click run. 
