@@ -221,7 +221,7 @@ public class ProductPage extends AppCompatActivity {
                         R.string.similar_product_found_product_page_activity, finalPrice));
             }
             if (!exactProductFound && !similarProductFound) {
-                navigateButton.setVisibility(View.GONE);
+                navigateButton.setVisibility(View.INVISIBLE);
             }
 
         }

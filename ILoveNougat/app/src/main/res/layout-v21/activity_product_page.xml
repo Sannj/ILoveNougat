@@ -41,7 +41,9 @@
         android:layout_below="@+id/PImage"
         android:layout_alignParentStart="true"
         android:layout_marginTop="51dp"
-        android:textColor="#060101" />
+        android:textColor="#060101"
+        android:paddingStart="16dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +53,9 @@
         android:id="@+id/pOrigPrice"
         android:layout_below="@+id/pBrandName"
         android:layout_alignParentStart="true"
-        android:textColor="#060101" />
+        android:textColor="#060101"
+        android:paddingStart="16dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +65,9 @@
         android:id="@+id/pDiscount"
         android:layout_below="@+id/pOrigPrice"
         android:layout_alignParentStart="true"
-        android:textColor="#060101" />
+        android:textColor="#060101"
+        android:paddingStart="16dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,8 +76,9 @@
         android:text="@string/final_price_textview_product_page"
         android:id="@+id/pFinalPrice"
         android:layout_below="@+id/pDiscount"
-        android:layout_alignParentStart="true"
-        android:textColor="#060101" />
+        android:textColor="#060101"
+        android:paddingStart="16dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -113,10 +120,10 @@
         android:paddingTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/priceOn6pm"
         android:layout_below="@+id/pFinalPrice"
-        android:layout_alignParentStart="true"
+        android:gravity="center"
         android:textColor="#060101" />
 
     <Button
