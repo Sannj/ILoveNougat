@@ -124,6 +124,8 @@ public class ProductResults extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), getResources().getString(
                     R.string.no_internet_toast), Toast.LENGTH_LONG).show();
+            Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent2);
         }
     }
 
@@ -167,6 +169,8 @@ public class ProductResults extends AppCompatActivity {
                 Log.v(TAG,"Added products to the arraylist");
             } catch (IOException | JSONException ex) {
                 ex.getLocalizedMessage();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
             return jArray;
         }
@@ -210,6 +214,8 @@ public class ProductResults extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getLocalizedMessage();
+                Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent3);
             } finally {
                 if (is != null) {
                     is.close();

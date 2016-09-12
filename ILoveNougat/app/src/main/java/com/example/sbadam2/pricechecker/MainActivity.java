@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG,"Submit button is clicked.");
         if (searchTerm.isEmpty()) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string
-                    .toast_string_main_activity), Toast.LENGTH_LONG).show();
+                    .toast_string_main_activity), Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, ProductResults.class);
             // make explicit which key holds the value
